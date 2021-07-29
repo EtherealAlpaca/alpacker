@@ -38,10 +38,10 @@ int main(int argc, char **argv) {
 	int stubLen = readFileIntoBuffer(stub, &stubBuffer);
 	fclose(stub);
 
-    //gen key
-    srand(time(NULL));
-    unsigned char key[2] = {rand() % 256, rand() % 256};
-    //patch key
+    	//gen key
+    	srand(time(NULL));
+    	unsigned char key[2] = {rand() % 256, rand() % 256};
+    	//patch key
 	int keyOffset = 0;
 	for (int i = 0; i < stubLen - 1; i++) {
 		if (stubBuffer[i] == 0x39 && stubBuffer[i + 1] == 0x30) {
@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 	memcpy(packedPayloadBuffer, stubBuffer, stubLen);
 	memcpy(packedPayloadBuffer + stubLen, payloadBuffer, payloadLen);
 	
-    //write to file
+    	//write to file
 	FILE *packedPayload = fopen(argv[2], "wb");
 	fwrite(packedPayloadBuffer, stubLen + payloadLen, 1, packedPayload);
 	fclose(packedPayload);
