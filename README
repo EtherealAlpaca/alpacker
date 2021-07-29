@@ -1,0 +1,12 @@
+This repository contains the source code for a very simple packer for elf binaries, somewhat similar to other projects like UPX. 
+In it's current state, each byte of the payload will be XORed.
+This project is, in its current state, only a proof of concept and as such should not be used to protect anything important.
+
+To compile stub:
+    make stub
+
+To compile packer:
+    make packer
+
+To pack:
+    ./packer payload output
