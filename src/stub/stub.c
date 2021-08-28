@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 	int payloadLen;
 	int payloadFd;
 
-	char filePath[1000];
+	char *filePath = realpath("/proc/self/exe", NULL);
 
     FILE *file;
 	char *buffer;
@@ -22,8 +22,6 @@ int main(int argc, char **argv) {
 	int key = 0x6b657931;
 
 	srand(key);
-
-    readlink("/proc/self/exe", filePath, 1000);
 
 	file = fopen(filePath, "rb");
 	fseek(file, 0, SEEK_END);

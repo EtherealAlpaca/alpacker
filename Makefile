@@ -1,9 +1,6 @@
 .PHONY: all
 
 stub:
-	gcc -g -o src/stub/stub.bin src/stub/stub.c
+	gcc -S -o src/stub/stub.s src/stub/stub.c && python3 src/transformer/randomizer.py src/stub/stub.s src/transformer/output.s && rm src/stub/stub.s && gcc -o src/stub/stub.bin src/transformer/output.s && rm src/transformer/output.s && strip src/stub/stub.bin
 
-packer:
-	gcc -o src/packer/packer.bin src/packer/packer.c
-
-all: stub packer
+all: stub
