@@ -35,7 +35,7 @@ def main():
 	payload_bytes = encrypt_buffer(payload_bytes, key)
 	
 	stub_bytes += payload_bytes
-	output_fp = open("output2.bin", "wb")
+	output_fp = open("smh.bin", "wb")
 	output_fp.write(stub_bytes)
 	output_fp.close()
 

