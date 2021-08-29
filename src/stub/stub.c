@@ -1,11 +1,12 @@
 #define _GNU_SOURCE
 
 #include <sys/mman.h>
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ptrace.h>
+#include <signal.h>
 
 int main(int argc, char **argv) {
 	int OFFSET = 0x704f6666;

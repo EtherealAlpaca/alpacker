@@ -18,6 +18,19 @@ chunk_list = []
 begin_instr = []
 end_instr = []
 
+junk_instr = ["mov %rax, %rax\n",
+			  "mov %rbx, %rbx\n",
+			  "mov %rcx, %rcx\n",
+			  "mov %rdx, %rdx\n",
+			  "push %rax\npop %rax\n", 
+			  "push %rbx\npop %rbx\n", 
+			  "push %rcx\npop %rcx\n", 
+			  "push %rdx\npop %rdx\n"]
+
+instr_list_fp = open("src/transformer/instructions.s", "r")
+real_instr = instr_list_fp.readlines()
+instr_list_fp.close()
+
 for line in lines:
 	line_num += 1
 	stripped = line.strip()
@@ -39,9 +52,18 @@ instr_num = 0
 for instruction in original_instr:
 	new_instr.append(f"lbl{instr_num}:\n")
 	new_instr.append(original_instr[instr_num])
+	for i in range(0, random.randint(0, 50)):
+		new_instr.append(junk_instr[random.randint(0, len(junk_instr) - 1)])
+	
 	instr_num += 1
 	if instr_num < instr_count:
 		new_instr.append(f"jmp lbl{instr_num}\n")
+	
+	for i in range(0, random.randint(0, 50)):
+		random_instr = real_instr[random.randint(0, len(real_instr) - 1)]
+		if "\n" in random_instr:
+			new_instr.append(random_instr)
+
 	chunk_list.append(new_instr[:])
 	new_instr.clear()
 
