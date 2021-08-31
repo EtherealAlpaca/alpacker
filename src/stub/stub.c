@@ -7,8 +7,30 @@
 #include <string.h>
 #include <sys/ptrace.h>
 #include <signal.h>
+#include <sys/prctl.h>
 
 int main(int argc, char **argv) {
+	
+	prctl(PR_SET_DUMPABLE, 0);
+	FILE* proc_status = fopen("/proc/self/status", "r");
+	if (proc_status == NULL) {
+		exit(0);
+	}
+	char line[1024] = { };
+	char *fgets(char *s, int size, FILE *stream);
+	while (fgets(line, sizeof(line), proc_status) != NULL) {
+		const char traceString[] = "TracerPid:";
+		char* tracer = strstr(line, traceString);
+		if (tracer != NULL) {
+			int pid = atoi(tracer + sizeof(traceString) - 1);
+			if (pid != 0) {
+				fclose(proc_status);
+				exit(0);
+			}
+		}
+	}
+	fclose(proc_status);
+	
 	int OFFSET = 0x704f6666;
 	int payloadLen;
 	int payloadFd;
