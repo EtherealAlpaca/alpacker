@@ -1,7 +1,7 @@
 
-# Delta [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSE)
+# Alpacker [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSE)
 
-Delta is an executable packer for linux elf binaries. It's purpose is to deter or
+Alpacker is an executable packer for linux elf binaries. It's purpose is to deter or
 inconvenience would be reverse engineers. 
 
 
